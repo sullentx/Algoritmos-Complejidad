@@ -24,26 +24,22 @@ class LinkedListMix {
         return end - start; // Retorna el tiempo total de ejecución de la inserción
     }
 
-    // Búsqueda lineal de un elemento por su ID
     linearSearch(id) {
         const start = performance.now(); // Marca el inicio del tiempo de ejecución
         let current = this.head;
         let index = 0;
-
         while (current) {
-            // Recorre la lista
-            if (current.data.id === id) {
+            // Recorre la lista enlazada
+            if (current.data.name === id) { // Utiliza 'business' en lugar de 'id'
                 const end = performance.now(); // Marca el final del tiempo de ejecución al encontrar el elemento
                 return { time: end - start, index: index }; // Retorna el tiempo y el índice del elemento encontrado
             }
-            current = current.next; // Avanza al siguiente nodo
+            current = current.next;
             index++;
         }
-
         const end = performance.now(); // Marca el final del tiempo de ejecución si no se encuentra el elemento
         return { time: end - start, index: -1 }; // Retorna el tiempo y -1 indicando que no se encontró el elemento
     }
-
     // Ordenamiento burbuja de la lista
     bubbleSort() {
         let iterations = 0; // Contador de iteraciones del algoritmo

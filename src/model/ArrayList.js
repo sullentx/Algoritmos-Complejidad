@@ -16,7 +16,7 @@ class ArrayListMix {
         const start = performance.now(); // Marca el inicio del tiempo de ejecución
         for (let i = 0; i < this.data.length; i++) {
             // Recorre el arreglo
-            if (this.data[i].id === id) {
+            if (this.data[i].name === id) { // Utiliza 'name' en lugar de 'id'
                 const end = performance.now(); // Marca el final del tiempo de ejecución al encontrar el elemento
                 return { time: end - start, index: i }; // Retorna el tiempo y el índice del elemento encontrado
             }
@@ -24,6 +24,7 @@ class ArrayListMix {
         const end = performance.now(); // Marca el final del tiempo de ejecución si no se encuentra el elemento
         return { time: end - start, index: -1 }; // Retorna el tiempo y -1 indicando que no se encontró el elemento
     }
+    
 
     // Ordenamiento burbuja del arreglo
     bubbleSort() {

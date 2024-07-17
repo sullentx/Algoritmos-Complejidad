@@ -37,6 +37,12 @@ fetch("src/controllers/business.json")
             root.appendChild(item); // Agrega el elemento de lista al elemento raíz en el DOM
         }
 
+        const searchName = "Marko's Meats & Deli"; // Aquí defines el nombre que deseas buscar
+        const linearSearchArray = arrayList.linearSearch(searchName);
+        console.log("Búsqueda lineal en ArrayList:", linearSearchArray);
+
+        const linearSearchLinkedList = linkedList.linearSearch(searchName);
+        console.log("Búsqueda lineal en LinkedList:", linearSearchLinkedList);
         // Método de ordenamiento Bubble Sort
         const sortedArray = arrayList.bubbleSort(); // Ordena el ArrayList usando Bubble Sort
         console.log("Bubble Sort Array:", sortedArray);
@@ -57,5 +63,6 @@ fetch("src/controllers/business.json")
 
         const radixList = linkedList.radixSort(); // Ordena la LinkedList usando Radix Sort
         console.log("Radix Sort LinkedList:", radixList);
+        const linealSearchArray = arrayList.linearSearch()
     })
     .catch(err => console.error("Error al cargar o procesar los datos:", err)); // Manejo de errores en caso de fallo en la solicitud o procesamiento

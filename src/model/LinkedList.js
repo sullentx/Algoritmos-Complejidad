@@ -30,7 +30,7 @@ class LinkedListMix {
         let index = 0;
         while (current) {
             // Recorre la lista enlazada
-            if (current.data.name === id) { // Utiliza 'business' en lugar de 'id'
+            if (current.data.business === id) { 
                 const end = performance.now(); // Marca el final del tiempo de ejecución al encontrar el elemento
                 return { time: end - start, index: index }; // Retorna el tiempo y el índice del elemento encontrado
             }
@@ -52,7 +52,7 @@ class LinkedListMix {
 
             while (current && current.next) {
                 iterations++; // Incrementa el contador de iteraciones
-                if (current.data.id > current.next.data.id) {
+                if (current.data.business > current.next.data.business) {
                     // Realiza el intercambio si el nodo actual es mayor que el siguiente
                     [current.data, current.next.data] = [current.next.data, current.data];
                     swapped = true; // Indica que se realizó un intercambio
@@ -73,7 +73,7 @@ class LinkedListMix {
             let result = [];
             while (left.length && right.length) {
                 iterations++; // Incrementa el contador de iteraciones
-                if (left[0].id < right[0].id) {
+                if (left[0].business < right[0].business) {
                     result.push(left.shift()); // Agrega el primer elemento del lado izquierdo al resultado
                 } else {
                     result.push(right.shift()); // Agrega el primer elemento del lado derecho al resultado

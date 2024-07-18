@@ -16,14 +16,14 @@ class ArrayListMix {
         const start = performance.now(); // Marca el inicio del tiempo de ejecución
         for (let i = 0; i < this.data.length; i++) {
             // Recorre el arreglo
-            if (this.data[i].name === id) { // Utiliza 'name' en lugar de 'id'
+            if (this.data[i].business === id) { // Utiliza 'name' en lugar de 'id'
                 const end = performance.now(); // Marca el final del tiempo de ejecución al encontrar el elemento
                 return { time: end - start, index: i }; // Retorna el tiempo y el índice del elemento encontrado
             }
         }
         const end = performance.now(); // Marca el final del tiempo de ejecución si no se encuentra el elemento
         return { time: end - start, index: -1 }; // Retorna el tiempo y -1 indicando que no se encontró el elemento
-    }
+    }   
     
 
     // Ordenamiento burbuja del arreglo
@@ -33,7 +33,7 @@ class ArrayListMix {
         for (let i = 0; i < this.data.length - 1; i++) {
             for (let j = 0; j < this.data.length - i - 1; j++) {
                 iterations++; // Incrementa el contador de iteraciones
-                if (this.data[j].id > this.data[j + 1].id) {
+                if (this.data[j].business> this.data[j + 1].business) {
                     // Realiza el intercambio si el elemento actual es mayor que el siguiente
                     [this.data[j], this.data[j + 1]] = [this.data[j + 1], this.data[j]];
                 }
@@ -51,7 +51,7 @@ class ArrayListMix {
             let result = [];
             while (left.length && right.length) {
                 iterations++; // Incrementa el contador de iteraciones
-                if (left[0].id < right[0].id) {
+                if (left[0].business < right[0].business) {
                     result.push(left.shift()); // Agrega el primer elemento del lado izquierdo al resultado
                 } else {
                     result.push(right.shift()); // Agrega el primer elemento del lado derecho al resultado
@@ -59,6 +59,7 @@ class ArrayListMix {
             }
             return result.concat(left, right); // Concatena los resultados finales del lado izquierdo y derecho
         };
+    
 
         const sort = (arr) => {
             if (arr.length < 2) {
@@ -77,7 +78,7 @@ class ArrayListMix {
     }
 
     // Método privado para convertir el campo 'business' en un valor numérico
-    _convertToNumeric(str) {
+    toNumero(str) {
         return str.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0); // Convierte la cadena en un valor numérico
     }
 
@@ -88,7 +89,7 @@ class ArrayListMix {
         // Convertir el campo 'business' en un valor numérico para el ordenamiento
         let numericData = this.data.map(item => ({
             ...item,
-            numericValue: this._convertToNumeric(item.business)
+            numericValue: this.toNumero(item.business)
         }));
 
         // Función para obtener el máximo valor numérico

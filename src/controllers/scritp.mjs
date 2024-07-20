@@ -1,20 +1,24 @@
 import ArrayListMix from '../model/ArrayList.js'; // Importa la clase ArrayListMix desde el archivo especificado
 import LinkedListMix from '../model/LinkedList.js'; // Importa la clase LinkedListMix desde el archivo especificado
 import Business from '../model/Business.js';
-// Obtén el elemento raíz en el DOM donde se mostrarán los datos
+
 let root = document.getElementById("list-bussines");
 
-// Crea instancias de ArrayListMix y LinkedListMix
 let arrayList = new ArrayListMix();
 let linkedList = new LinkedListMix();
-// Realiza una solicitud fetch para obtener los datos del archivo JSON de negocios
-fetch("src/model/business.json")
-    .then(response => response.json()) // Convierte la respuesta a formato JSON
+let arrayList1 = new ArrayListMix();
+let linkedList1 = new LinkedListMix();
+let arrayList2 = new ArrayListMix();
+let linkedList2 = new LinkedListMix();
+const loadingScreen = document.getElementById("loadingScreen");
+
+fetch("src/model/bussines.json")
+    .then(response => response.json()) 
     .then(data => {
         // Tiempo de inserción en ArrayList
         console.log("Iniciando inserción en ArrayList...");
-        const startTimeArray = performance.now(); // Marca el inicio del tiempo
-        const limitedData = data.slice(0, 20000); // Obtener solo los primeros 100 registros
+        const startTimeArray = performance.now(); 
+        const limitedData = data.slice(0, 500); 
         limitedData.forEach(item => {
             const negocio = new Business(
                 item.business,
@@ -23,14 +27,18 @@ fetch("src/model/business.json")
                 item.city,
                 item.state  
             );
-            arrayList.insert(negocio); // Inserta cada elemento en el ArrayList
+            arrayList.insert(negocio);
+            arrayList1.insert(negocio); 
+            arrayList2.insert(negocio);
         });
-        const endTimeArray = performance.now(); // Marca el final del tiempo
-        console.log(`Tiempo de inserción en ArrayList: ${endTimeArray - startTimeArray} milisegundos`);
+        const endTimeArray = performance.now(); 
+
+        const totalTimeArray = endTimeArray - startTimeArray
+
         // Tiempo de inserción en LinkedList
         console.log("Iniciando inserción en LinkedList...");
-        const startTimeLinkedList = performance.now(); // Marca el inicio del tiempo
-        const limitedDataLikedList = data.slice(0, 20000); // Obtener solo los primeros 100 registros
+        const startTimeLinkedList = performance.now(); 
+        const limitedDataLikedList = data.slice(0, 500); 
         limitedDataLikedList.forEach(item => {
             const negocio = new Business(
                 item.business,
@@ -39,45 +47,143 @@ fetch("src/model/business.json")
                 item.city,
                 item.state  
             );
-            linkedList.insert(negocio); // Inserta cada elemento en el ArrayList
-        });
-        const endTimeLinkedList = performance.now(); // Marca el final del tiempo
-        console.log(`Tiempo de inserción en LinkedList: ${endTimeLinkedList - startTimeLinkedList} milisegundos`);
-        // Muestra solo los primeros 100 registros en el DOM
-        for (let x = 0; x < 100; x++) {
-            let item = document.createElement("li");
-            item.textContent = data[x].name; // Añade el nombre del negocio como texto del elemento de lista
-            root.appendChild(item); // Agrega el elemento de lista al elemento raíz en el DOM
-        }
+            linkedList.insert(negocio);
+            linkedList1.insert(negocio);
+            linkedList2.insert(negocio);
 
-        //Array y linekdList desordenados  
-        const searchName = "mWMc6_wTdE0EUBKIGXDVfA"; // Aquí defines el nombre que deseas buscar
+        });
+        const endTimeLinkedList = performance.now(); 
+
+        const totalTimeLinkedList = endTimeLinkedList - startTimeLinkedList
+
+        var options = {
+            chart: {
+              type: 'bar'
+            },
+            series: [{
+              name: 'Milisegundos',
+              data: [Math.round(totalTimeArray * 10) / 10,Math.round(totalTimeLinkedList * 10) / 10]
+            }],
+            xaxis: {
+                name: 'Milisegundos',
+              categories: ["Linkedlist","Arraylist"]
+            }
+          }
+          
+          var chart = new ApexCharts(document.querySelector("#insercion"), options);
+          
+          chart.render();
+
+        const searchName = "oBqjxbnNKILyCN1S8KKd_g"; // Aquí defines el nombre que deseas buscar
         const linearSearchArray = arrayList.linearSearch(searchName);
+
+        
         console.log("Búsqueda lineal en ArrayList:", linearSearchArray);
 
+        
         const linearSearchLinkedList = linkedList.linearSearch(searchName);
         console.log("Búsqueda lineal en LinkedList:", linearSearchLinkedList);
 
-        // Método de ordenamiento Bubble Sort
-        const sortedArray = arrayList.bubbleSort(); // Ordena el ArrayList usando Bubble Sort
+        var options = {
+            chart: {
+              type: 'bar'
+            },
+            series: [{
+              name: 'Milisegundos',
+              data: [linearSearchLinkedList.time,linearSearchArray.time]
+            }],
+            xaxis: {
+                name: 'Milisegundos',
+              categories: ["ArrayList","LinkedList"]
+            }
+          }
+          
+          var chart = new ApexCharts(document.querySelector("#busquedaLineal"), options);
+          
+          chart.render();
+
+          
+        const sortedArray = arrayList.bubbleSort(); 
         console.log("Bubble Sort Array:", sortedArray);
 
-        const sortedLinkedList = linkedList.bubbleSort(); // Ordena la LinkedList usando Bubble Sort
+        const sortedLinkedList = linkedList.bubbleSort(); 
         console.log("Bubble Sort LinkedList:", sortedLinkedList);
 
-        // Método de ordenamiento Merge Sort
-        const mergeArray = arrayList.mergeSort(); // Ordena el ArrayList usando Merge Sort
+        const mergeArray = arrayList1.mergeSort(); 
         console.log("Merge Sort ArrayListMix:", mergeArray);
 
-        const mergeLiked = linkedList.mergeSort(); // Ordena la LinkedList usando Merge Sort
+        const mergeLiked = linkedList1.mergeSort();
         console.log("Merge Sort LinkedListMix:", mergeLiked);
 
-        // Método de ordenamiento Radix Sort
-        const radixArray = arrayList.radixSort(data); // Ordena el ArrayList usando Radix Sort
+        const radixArray = arrayList2.radixSort(data); 
         console.log("Radix Sort Array:", radixArray);
 
-        const radixList = linkedList.radixSort(); // Ordena la LinkedList usando Radix Sort
+        const radixList = linkedList2.radixSort();
         console.log("Radix Sort LinkedList:", radixList);
        
-    })
-    .catch(err => console.error("Error al cargar o procesar los datos:", err)); // Manejo de errores en caso de fallo en la solicitud o procesamiento
+        
+        var options = {
+            chart: {
+              type: 'bar'
+            },
+            series: [{
+              name: 'Milisegundos',
+              data: [Math.round(sortedArray.time * 10) / 10,Math.round(sortedLinkedList.time * 10) / 10,Math.round(mergeArray.time * 10) / 10
+                    ,Math.round(mergeLiked.time * 10) / 10,Math.round(radixArray.time * 10) / 10,Math.round(radixList.time * 10) / 10]
+            }],
+            xaxis: {
+                name: 'Milisegundos',
+              categories: ["Burbuja Array","Burbuja Linked", "Merge Array" ,"Merge Linked", "Radix Array", "Radix Linked"]
+            }
+          }
+          
+          var chart = new ApexCharts(document.querySelector("#tiemposOrdenamiento"), options);
+          
+          chart.render();
+
+          var options = {
+            chart: {
+              type: 'bar'
+            },
+            series: [{
+              name: 'Iteraciones',
+              data: [sortedArray.iterations,sortedLinkedList.iterations]
+            }],
+            xaxis: {
+                name: 'Iteraciones',
+              categories: ["ArrayList","LinkedList"]
+            }
+          }
+          
+          var chart = new ApexCharts(document.querySelector("#IteracionesBurbuja"), options);
+          
+          chart.render();
+
+          var options = {
+            chart: {
+              type: 'bar'
+            },
+            series: [{
+              name: 'Iteraciones',
+              data: [mergeArray.iterations,mergeLiked.iterations,radixArray.iterations,radixList.iterations]
+            }],
+            xaxis: {
+                name: 'Iteraciones',
+              categories: ["ArrayList","LinkedList"]
+            }
+          }
+          
+          var chart = new ApexCharts(document.querySelector("#iteracionesOrdenamiento"), options);
+          
+          chart.render();
+          setTimeout(function() {
+            loadingScreen.classList.add("hidden");
+          }, 1000);
+
+  
+    })    
+    .catch(err => {console.error("Error al cargar o procesar los datos:", err)
+      setTimeout(function() {
+        loadingScreen.classList.add("hidden");
+      }, 1000);
+    });

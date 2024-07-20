@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script type="module" src="src/controllers/scritp.mjs"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UpChiapas</title>
 </head>
 <body>
-    <ul id="list-bussines"></ul>
-    <script type="module" src="./src/controllers/scritp.mjs"></script>
+    <div id="loadingScreen">
+        <div id="loadingLineContainer">
+            <div id="loadingLine"></div>
+        </div>
+    </div>
+    <header id="header">
+        <img id="logo" src="./src/images/up.png" alt="">
+        <h1 id="titulo">UP CHIAPAS</h1>
+    </header>
+    <div id="graficasBox">
+        <div id="Fila1_GraficasBox">
+            <div id="GraficaBox">
+                <h3>Tiempo de insercion</h1>
+                <div id="insercion"></div>
+            </div>
+            <div id="GraficaBox">
+                <h3>Tiempo de busqueda linea</h3>
+                <div id="busquedaLineal"></div>
+            </div>
+        </div>
+        <div id="Fila2_GraficasBox">
+            <div id="GraficaBox">
+                <h3>Tiempos de ordenamiento</h3>
+                <div id="tiemposOrdenamiento"></div>
+            </div>
+            <div id="GraficaBox">
+                <h3>Iteraciones de ordenamiento Bubble</h3>
+                <div id="IteracionesBurbuja"></div>
+            </div>
+            <div id="GraficaBox">
+                <h3>Iteraciones de ordenamiento Merge y Radix</h3>
+                <div id="iteracionesOrdenamiento"></div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
